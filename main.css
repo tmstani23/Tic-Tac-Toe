@@ -1,0 +1,16 @@
+#container-div {
+    display:flex;
+    margin: 0 auto;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+    width: 400px;
+    height: 400px;
+    border-style: solid;
+    border-color: black;
+    
+}
+#game-board {
+    border-style: solid;
+    border-color: black;
+}

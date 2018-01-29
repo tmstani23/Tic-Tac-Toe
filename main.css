@@ -14,3 +14,10 @@
     border-style: solid;
     border-color: black;
 }
+#outputP {
+    font-size: 22px;
+    color: black;
+    width: 150px;
+    height: 150px;
+    word-wrap: wrap auto;
+}

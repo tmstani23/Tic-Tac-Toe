@@ -6,12 +6,13 @@
 //X O X
 //create a tic tac toe game where the computer never loses:
 let compP = "X";
-let player = "O";
-let currentBoard = ["O", 1, 2, 
-                    "X", "X", 5,    
+let realP = "O";
+let currentBoard = [0, 1, 2, 
+                    "X", "O", 5,    
                     "X", "O", "X"];
 let tempBoard = [];
 let score;
+let openPositions = [];
 //define rules of the game by indices:
 //create winning board function:
 
@@ -65,35 +66,79 @@ function winningBoard(player, board) {
     }   
 }
 
-
+function getOpenPos(board) {
+    for(i=0; i<board.length; i++){
+        if (board[i]!="X" && board[i]!="O") {
+            openPositions.push(i);
+        }
+    }
+}
 
 //create compMove function:
 function compMove() {
-    //loop through the game board
-    for(i=0; i<currentBoard.length; i++){
-        //find first open spot:
-        if (currentBoard[i]!="X" && currentBoard[i]!="O") {
-            console.log(i);
-            //check if each open spot results in win:
-            //map currentboard to temp board:
-            tempBoard = currentBoard;
-            console.log(tempBoard);
-            //input player mark in open spot:
-            tempBoard[i] = "X";
-            //run test win function //Check problem here -----<<<<<
-            if (winningBoard(compP,tempBoard) == 10); {
-                return console.log(tempBoard);
-            }
-            //reset tempBoard to empty after each check;
-            tempBoard = [];
-            //if win update main board with comp mark and end loop
-
+    let winningPosition;
+    let result;
+    console.log(result);
+    //board positions =   [0, 1, 2, 
+    //                     3, 4, 5,    
+    //                     6, 7, 8];
+    // let currentBoard = ["O",  1,   2, 
+    //                     "X", "X",  5,    
+    //                     "X", "O", "X"];
+    
+   //get open positions
+   //check each position to see if win
+    getOpenPos(currentBoard);
+    //for each position:
+    openPositions.forEach(function (position) {
+        //create copy of main board
+        tempBoard = Array.from(currentBoard);
+        //console.log(tempBoard);
+        //console.log(position); 
+        //place an x at the position
+        tempBoard[position] = "X";
+        //console.log(tempBoard);
+        //test if win condition
+        //console.log(winningBoard(compP, tempBoard));
+        if(winningBoard(compP, tempBoard) === 10) {
+            winningPosition = position;
+            result = winningPosition + " " + compP;
+            return result;
         }
-        
-    }
+    });
+    
+    //else if not a win check if enemy player can win
+    //getOpenPos(currentBoard);
+    //for each position:
+    //if there is no result from the first check:
+    if (result == undefined) {
+        openPositions.forEach(function (position) {
+            //create copy of main board
+            ;
+            tempBoard = Array.from(currentBoard);
+            //console.log(tempBoard);
+            //console.log(position); 
+            //place an x at the position
+            tempBoard[position] = "O";
+
+            //console.log(tempBoard);
+            //test if win condition
+            //console.log(winningBoard(realP, tempBoard));
+            if(winningBoard(realP, tempBoard) === 10) {
+                winningPosition = position;
+                result = winningPosition + " " + realP;
+                return result;
+            }
+            //else if not a win check if enemy player can win
+        });
+    };
+
+    //console.log(result);
+    return result;
+    
 }
-    //if so pick spot and update board
-    //if not continue checking open spots for a win
+    
+    
     //if a win is found pick spot and update board
     //if no wins are found check all open spots for enemyplayer wins
     //if win is found block that location
@@ -102,8 +147,8 @@ function compMove() {
 
 
 //Call main game function:
-//winningBoard(compP, currentBoard);
-compMove();
+//console.log(winningBoard(realP, currentBoard));
+console.log(compMove());
 
 //Define win conditions
 //game ends and display if winner:

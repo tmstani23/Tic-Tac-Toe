@@ -7,9 +7,9 @@
 //create a tic tac toe game where the computer never loses:
 let compP = "X";
 let realP = "O";
-let currentBoard = [0, 1, 2, 
-                    "X", "O", 5,    
-                    "X", "O", "X"];
+let currentBoard = [ 0,   1,  "O", 
+                     3,  "O",  5,    
+                     6,   7, "X"];
 let tempBoard = [];
 let score;
 let openPositions = [];
@@ -18,9 +18,8 @@ let openPositions = [];
 
         //if index 0 and 3 and 6 = compP:
 
-// function displayMsg(msg) {
-//     document.getElementById("outputP").innerHTML = msg;
-// }        
+
+     
 function winningBoard(player, board) {   
         //3 in a row vertical
         //col 1
@@ -102,13 +101,15 @@ function compMove() {
         //console.log(winningBoard(compP, tempBoard));
         if(winningBoard(compP, tempBoard) === 10) {
             winningPosition = position;
+            //if a comp win is found pick spot and update base board
+            currentBoard[winningPosition] = compP;
+            console.log(currentBoard + ` current board`)
             result = winningPosition + " " + compP;
             return result;
         }
     });
     
-    //else if not a win check if enemy player can win
-    //getOpenPos(currentBoard);
+    //if no comp wins are found check all open spots for real player wins
     //for each position:
     //if there is no result from the first check:
     if (result == undefined) {
@@ -126,29 +127,55 @@ function compMove() {
             //console.log(winningBoard(realP, tempBoard));
             if(winningBoard(realP, tempBoard) === 10) {
                 winningPosition = position;
+                //if real player win is found block that location:
+                currentBoard[position] = compP;
+                console.log(currentBoard + ` current board`)
                 result = winningPosition + " " + realP;
                 return result;
             }
             //else if not a win check if enemy player can win
         });
     };
-
+    
+    
+    
+    //if no enemy wins are found continue searching down another level
     //console.log(result);
     return result;
-    
 }
     
+//Real player move function:
+function realPMove(index) {
+    let errorM = "Must be an open position";
+    getOpenPos(currentBoard);
+    console.log(currentBoard.includes(index))
+
+    //throw an error if input is not a whole number between 0 and 8:
+    if(!currentBoard.includes(index)){
+        console.log(errorM);
+        throw errorM;
+    }
+    currentBoard[index] = realP;
+    console.log(currentBoard);
     
-    //if a win is found pick spot and update board
-    //if no wins are found check all open spots for enemyplayer wins
-    //if win is found block that location
-    //if no enemy wins are found continue searching down another level
+}  
+
+function displayMsg(msg) {
+    document.getElementById("outputP").innerHTML = msg;
+}
+    
 
 
 
 //Call main game function:
 //console.log(winningBoard(realP, currentBoard));
 console.log(compMove());
+//console.log(realPMove(1));
+console.log(displayMsg("wtfmate"));
+
+//Function to display messages to the screen:
+
+//window.onload = displayMsg;   
 
 //Define win conditions
 //game ends and display if winner:

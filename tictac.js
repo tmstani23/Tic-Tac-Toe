@@ -7,12 +7,19 @@
 //create a tic tac toe game where the computer never loses:
 let compP = "X";
 let realP = "O";
-let currentBoard = [ 0,   1,  "O", 
+let currentBoard = [ 0,   1,  "X", 
                      3,  "O",  5,    
-                     6,   7, "X"];
+                     6,   "O", "X"];
 let tempBoard = [];
 let score;
 let openPositions = [];
+let isRunning;
+let realPTurn;
+let realPInput;
+let compPTurn;
+let result;
+let realPWon;
+let compPWon;
 //define rules of the game by indices:
 //create winning board function:
 
@@ -77,7 +84,7 @@ function getOpenPos(board) {
 function compMove() {
     let winningPosition;
     let result;
-    console.log(result);
+    //console.log(result);
     //board positions =   [0, 1, 2, 
     //                     3, 4, 5,    
     //                     6, 7, 8];
@@ -103,8 +110,11 @@ function compMove() {
             winningPosition = position;
             //if a comp win is found pick spot and update base board
             currentBoard[winningPosition] = compP;
-            console.log(currentBoard + ` current board`)
+            console.log(currentBoard + ` compwins`)
             result = winningPosition + " " + compP;
+            compPWon = true;
+            displayMsg(result);
+            isRunning = false;
             return result;
         }
     });
@@ -112,35 +122,37 @@ function compMove() {
     //if no comp wins are found check all open spots for real player wins
     //for each position:
     //if there is no result from the first check:
-    if (result == undefined) {
-        openPositions.forEach(function (position) {
-            //create copy of main board
-            ;
-            tempBoard = Array.from(currentBoard);
-            //console.log(tempBoard);
-            //console.log(position); 
-            //place an x at the position
-            tempBoard[position] = "O";
+        if (result == undefined) {
+            openPositions.forEach(function (position) {
+                //create copy of main board
+                
+                tempBoard = Array.from(currentBoard);
+                //console.log(tempBoard);
+                //console.log(position); 
+                //place an x at the position
+                tempBoard[position] = "O";
 
-            //console.log(tempBoard);
-            //test if win condition
-            //console.log(winningBoard(realP, tempBoard));
-            if(winningBoard(realP, tempBoard) === 10) {
-                winningPosition = position;
-                //if real player win is found block that location:
-                currentBoard[position] = compP;
-                console.log(currentBoard + ` current board`)
-                result = winningPosition + " " + realP;
-                return result;
-            }
-            //else if not a win check if enemy player can win
-        });
-    };
+                //console.log(tempBoard);
+                //test if win condition
+                //console.log(winningBoard(realP, tempBoard));
+                if(winningBoard(realP, tempBoard) === 10) {
+                    winningPosition = position;
+                    //if real player win is found block that location:
+                    currentBoard[position] = compP;
+                    console.log(currentBoard + ` compblocking realp`)
+                    // result = winningPosition + " " + realP;
+                    // displayMsg(result);
+                    return result;
+                }
+                //else if not a win check if enemy player can win
+            });
+        };
     
     
     
     //if no enemy wins are found continue searching down another level
     //console.log(result);
+    //go to player turn
     return result;
 }
     
@@ -148,30 +160,102 @@ function compMove() {
 function realPMove(index) {
     let errorM = "Must be an open position";
     getOpenPos(currentBoard);
-    console.log(currentBoard.includes(index))
-
+    //console.log(currentBoard.includes(index))
+    
     //throw an error if input is not a whole number between 0 and 8:
     if(!currentBoard.includes(index)){
         console.log(errorM);
         throw errorM;
     }
+    //player moves in input arg index location:
     currentBoard[index] = realP;
-    console.log(currentBoard);
+    //if player wins:
+    if(winningBoard(realP, currentBoard) === 10) {
+        console.log(currentBoard + ` realp wins!`)
+        realPWon = true;
+        displayMsg("realP wins" + realPWon);
+        isRunning = false;
+        
+    }
+    else {
+        console.log(currentBoard);
+        
+    }
+    
     
 }  
 
 function displayMsg(msg) {
     document.getElementById("outputP").innerHTML = msg;
 }
+
+function determineTurn(turn) {
+    if(turn === "real") {
+        realPTurn = true;
+        compPTurn = false;
+    }
+    else if (turn === "comp") {
+        realPTurn = false;
+        compPTurn = true;
+    }
+}
+//Create an event loop:
+//Begin loop:
+//While game is running loop:
+isRunning = false;
+determineTurn("real");
+while(isRunning === true) {
+    //Decide which player goes first:
+    //comp player goes first:
+    if(compPWon == true || realPWon == true) {
+        isRunning = false;
+        
+    }
+    //win game state:
+    if(compPTurn == true) {
+        compMove();
+        determineTurn("real");
+    }
+    if(realPTurn == true) {
+        
+        realPInput = document.getElementById("pInput").value;
+        //console.log(realPInput);
+        //document.getElementById("submitButton").addEventListener("click", realPMove(realPInput));
+        //need to add an event listener here and a submit button to collect the value each time
+        realPMove(0);
+        determineTurn("comp");
+        
+    } 
     
+    
+    
+    //no open spots remaining:
+    if(openPositions.length == 0) {
+        displayMsg("The game ends in a tie!");
+        console.log(currentBoard);
+    }
+   
+    
+    
+    //alternate turns:
+   
+    
+    // else {
+    //     let errorM = "neither player won";
+    //     console.log(errorM);
+    //     throw error;
+    // }
+    //displayMsg(realPTurn + " " + compPTurn);
+//end event when a player wins or tie:
+}
 
 
 
 //Call main game function:
 //console.log(winningBoard(realP, currentBoard));
-console.log(compMove());
+compMove();
 //console.log(realPMove(1));
-console.log(displayMsg("wtfmate"));
+//console.log(displayMsg("wtfmate"));
 
 //Function to display messages to the screen:
 

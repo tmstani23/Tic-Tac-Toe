@@ -11,8 +11,17 @@
     
 }
 #game-board {
+    display: grid;
+    grid-template-columns: 50px 50px 50px;
+    grid-template-rows: 50px 50px 50px;
+    grid-gap: 3px;
+    margin: 0 auto;
     border-style: solid;
     border-color: black;
+    
+}
+#game-board div {
+    background-color: cornflowerblue;
 }
 #outputP {
     font-size: 22px;

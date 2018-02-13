@@ -25,7 +25,27 @@ let compPWon;
 
         //if index 0 and 3 and 6 = compP:
 
-
+function choosePlayer(player) {
+    if(player === "X"){
+        console.log("playerisX");
+        realP = player;
+        compP = "O";
+    }
+    if(player === "O"){
+        console.log("playerisO");
+        realP = player;
+        compP = "X";
+    }
+    //Remove the two select player buttons from the html:
+    document.getElementById('chooseX').parentNode
+    .removeChild(document.getElementById('chooseX'));
+    document.getElementById('chooseO').parentNode
+    .removeChild(document.getElementById('chooseO'));
+    //Remove the character select paragraph from the html:
+    document.getElementById('chooseP').parentNode
+    .removeChild(document.getElementById('chooseP'));
+    
+};
      
 function winningBoard(player, board) {   
         //3 in a row vertical
@@ -118,6 +138,7 @@ function compMove() {
             winningPosition = position;
             //if a comp win is found pick spot and update base board
             currentBoard[position] = compP;
+            changeBColor(compP, position);
             hasMoved = true;
             console.log(currentBoard + ` compwins`)
             result = winningPosition + " " + compP + ` Computer Wins!`;
@@ -144,10 +165,6 @@ function compMove() {
             //place an x at the position
             tempBoard[position] = "O";
             
-            // if(compPWon === true){
-            //     console.log("compwontrue");
-            //     return false;
-            // }
             //console.log(tempBoard);
             //test if win condition
             //console.log(winningBoard(realP, tempBoard));
@@ -155,6 +172,7 @@ function compMove() {
                 //winningPosition = position;
                 //if real player win is found block that location:
                 currentBoard[position] = compP;
+                changeBColor(compP, position);
                 hasMoved = true;
                 console.log(currentBoard + ` compblocking realp` + position);
                 // result = winningPosition + " " + realP;
@@ -177,6 +195,7 @@ function compMove() {
             console.log(randomOpen);
             //place X in that location
             currentBoard[randomOpen] = compP;
+            changeBColor(compP, randomOpen);
             console.log(currentBoard + "compMoved" + randomOpen);
     }
         
@@ -187,11 +206,29 @@ function compMove() {
     return compPWon;
 }
 
-function testButton() {
-    realPInput = document.getElementById("pInput").value;
-    realPInput = parseInt(realPInput);
+// function testButton() {
+//     realPInput = document.getElementById("pInput").value;
+//     realPInput = parseInt(realPInput);
     
-    realPMove(realPInput);
+//     realPMove(realPInput);
+// }
+
+function changeBColor (player, index) {
+    let dispColor = "index" + index;
+    
+    //If real player
+    if(document.getElementById(dispColor) === null) {
+        return;
+    }
+    if(player === realP) {
+        
+        document.getElementById(dispColor).style.backgroundColor = "#6d1818";
+    }
+    if(player === compP) {
+        
+        console.log(document.getElementById(dispColor).style.backgroundColor = "#f0f0f0");
+    }
+    
 }
 //Real player move function:
 function realPMove(index) {
@@ -208,6 +245,7 @@ function realPMove(index) {
     //throw an error if input is not a whole number between 0 and 8:
     if(!currentBoard.includes(index)){
         console.log(errorM + index);
+        displayMsg(errorM);
         throw errorM;
     }
     if(compPTurn === true) {
@@ -216,6 +254,7 @@ function realPMove(index) {
     }
     //player moves in input arg index location:
     currentBoard[index] = realP;
+    changeBColor(realP, index);
     console.log(currentBoard + ` realpmoved` + index);
     //check if player wins:
     if(winningBoard(realP, currentBoard) === 10) {
@@ -235,11 +274,18 @@ function displayMsg(msg) {
 }
 
 function determineTurn(turn) {
+    openPositions = [];
+    getOpenPos(currentBoard);
+    console.log(openPositions.length);
+    if(openPositions.length === 0) {
+        console.log("no open positions");
+        displayMsg("The Game Ends in a Tie!");
+    }
     if(turn === "real") {
         realPTurn = true;
         compPTurn = false;
     }
-    else if (turn === "comp") {
+    else if(turn === "comp") {
         realPTurn = false;
         compPTurn = true;
     }
@@ -259,8 +305,8 @@ function updateDisplay(board) {
 
 //Call main game function:
 //console.log(winningBoard(realP, currentBoard));
-compMove();
-updateDisplay();
+//compMove();
+//updateDisplay();
 //realPMove(2);
 //console.log(displayMsg("wtfmate"));
 

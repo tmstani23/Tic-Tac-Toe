@@ -7,9 +7,7 @@
 //create a tic tac toe game where the computer never loses:
 let compP = "X";
 let realP = "O";
-let currentBoard = [ 0,    1,   2, 
-                      3,    4,   5,    
-                     6,   7, 8];
+let currentBoard = [];
 let tempBoard = [];
 let score;
 let openPositions = [];
@@ -37,13 +35,11 @@ function choosePlayer(player) {
         compP = "X";
     }
     //Remove the two select player buttons from the html:
-    document.getElementById('chooseX').parentNode
-    .removeChild(document.getElementById('chooseX'));
-    document.getElementById('chooseO').parentNode
-    .removeChild(document.getElementById('chooseO'));
-    //Remove the character select paragraph from the html:
-    document.getElementById('chooseP').parentNode
-    .removeChild(document.getElementById('chooseP'));
+    if(document.getElementById("chooseX")!= null) {
+        removeButtons();
+    }
+
+    populateBoard(currentBoard);
     
 };
      
@@ -104,7 +100,7 @@ function winningBoard(player, board) {
 
 function getOpenPos(board) {
     openPositions = [];
-    for(i=0; i<board.length; i++){
+    for(i=0; i<9; i++){
         if (board[i]!="X" && board[i]!="O") {
             openPositions.push(i);
         }
@@ -226,8 +222,9 @@ function changeBColor (player, index) {
     }
     if(player === compP) {
         
-        console.log(document.getElementById(dispColor).style.backgroundColor = "#f0f0f0");
+        document.getElementById(dispColor).style.backgroundColor = "#f0f0f0";
     }
+    // 
     
 }
 //Real player move function:
@@ -272,13 +269,67 @@ function realPMove(index) {
 function displayMsg(msg) {
     document.getElementById("outputP").innerHTML = msg;
 }
+function populateBoard(board){
+    for(i=0; i<9; i++) {
+        currentBoard[i] = i;
+    }
+    updateDisplay(currentBoard);
+    changeBColor();
+}
+function resetGame(){
+    //reset currentboard state
+    currentBoard = [];
+    displayMsg("");
+    if(document.getElementById("chooseX")!= null) {
+        removeButtons();
+    }
+    
+    //add choose player paragraph and text
+    let para = document.createElement("chooseP");                       // Create a <p> element
+    var t = document.createTextNode("Choose Your Side!");
+    para.setAttribute("id", "chooseP");
+    para.appendChild(t);
+    document.getElementById("choose-div").appendChild(para); 
+    //Add choose player buttons
+    let button1 = document.createElement("chooseX");
+    let button2 = document.createElement("chooseO");
+    //add button ids:
+    button1.setAttribute("id", "chooseX");
+    button2.setAttribute("id", "chooseO");
+    //add button classes:
+    // button1.classList.add("btn");
+    // button2.classList.add("btn");
+    // button1.classList.add("btn-primary");
+    // button2.classList.add("btn-primary");
+    
+
+    button1.innerHTML = `<input type = 'button' class='btn btn-primary' value = 'Choose X' onClick = 'choosePlayer("X")'>`;
+    button2.innerHTML = `<input type = 'button' class='btn btn-primary' value = 'Choose O' onClick = 'choosePlayer("O")'>`;
+
+    document.getElementById("choose-div").appendChild(button1);
+    document.getElementById("choose-div").appendChild(button2); 
+    
+    //add on click functionality:
+    // button1.onclick = choosePlayer("X");
+    // button2.onclick = choosePlayer("O");
+
+    //reset background colors to blue:
+    for(i=0; i<9; i++){
+        let addColor = "index" + i;
+        document.getElementById(addColor).style.backgroundColor = "#5c85d6";
+    }
+    //populate board:
+    populateBoard(currentBoard);
+    //update display
+    updateDisplay();
+}
 
 function determineTurn(turn) {
     openPositions = [];
     getOpenPos(currentBoard);
-    console.log(openPositions.length);
+    //console.log(openPositions.length);
     if(openPositions.length === 0) {
-        console.log("no open positions");
+        //console.log("no open positions");
         displayMsg("The Game Ends in a Tie!");
     }
     if(turn === "real") {
@@ -289,7 +340,7 @@ function determineTurn(turn) {
         realPTurn = false;
         compPTurn = true;
     }
-    updateDisplay();
+    updateDisplay(currentBoard);
 }
 function updateDisplay(board) {
     //let dispId = "index" + 1;
@@ -302,7 +353,16 @@ function updateDisplay(board) {
 
     }
 }
-
+function removeButtons() {
+    //Remove the two select player buttons from the html:
+    document.getElementById('chooseX').parentNode
+    .removeChild(document.getElementById('chooseX'));
+    document.getElementById('chooseO').parentNode
+    .removeChild(document.getElementById('chooseO'));
+    //Remove the character select paragraph from the html:
+    document.getElementById('chooseP').parentNode
+    .removeChild(document.getElementById('chooseP'));
+}
 //Call main game function:
 //console.log(winningBoard(realP, currentBoard));
 //compMove();

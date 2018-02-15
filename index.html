@@ -15,10 +15,13 @@
         
         <div id="container-div">
             <h1>Tic-Tac-Toe</h1>
+            <div id="choose-div">
+                <p id="chooseP">Choose your side!</p>
+                <button id="chooseX" class="btn btn-primary" onclick="choosePlayer('X')">Choose X</button>
+                <button id="chooseO" class="btn btn-primary" onclick="choosePlayer('O')">Choose O</button>
+            </div>
             <p onload="displayMsg()" id="outputP"></p>
-            <p id="chooseP">Choose your side!</p>
-            <button id="chooseX" class="btn btn-primary" onclick="choosePlayer('X')">Choose X</button>
-            <button id="chooseO" class="btn btn-primary" onclick="choosePlayer('O')">Choose O</button>
+            
             <div id="game-board">
                 
                 <button id="index0" class="btn btn-primary" onclick="realPMove(0)"></button>
@@ -32,6 +35,9 @@
                 <button id="index8" class="btn btn-primary" onclick="realPMove(8)"></button>
                 
                 
+            </div>
+            <div>
+                <button id="resetB" class="btn btn-primary" onclick="resetGame()">Reset Game</button>    
             </div>
 
         </div>

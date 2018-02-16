@@ -5,13 +5,13 @@
 //   
 //X O X
 //create a tic tac toe game where the computer never loses:
-let compP = "X";
-let realP = "O";
+let compP;
+let realP;
 let currentBoard = [];
 let tempBoard = [];
 let score;
 let openPositions = [];
-let isRunning;
+let isReset;
 let realPTurn;
 let realPInput;
 let compPTurn;
@@ -136,8 +136,8 @@ function compMove() {
             currentBoard[position] = compP;
             changeBColor(compP, position);
             hasMoved = true;
-            console.log(currentBoard + ` compwins`)
-            result = winningPosition + " " + compP + ` Computer Wins!`;
+            console.log(currentBoard + winningPosition + ` compwins`)
+            result = `Computer Wins!`;
             compPWon = true;
             //go to determine winner function:
             displayMsg(result);
@@ -239,15 +239,26 @@ function realPMove(index) {
     
     //console.log(currentBoard);
     //console.log(currentBoard.includes(index))
-    //throw an error if input is not a whole number between 0 and 8:
+    //Throw an error if user clicks a button before choosing a player:
+    if(realP === undefined) {
+        errorM = "Must choose a player before moving!";
+        displayMsg(errorM);
+        return;
+    }
+    //throw an error if user clicks on a non-empty button:
     if(!currentBoard.includes(index)){
         console.log(errorM + index);
         displayMsg(errorM);
-        throw errorM;
+        return;
+    }
+    if(realPWon === true || compPWon === true) {
+        let message = "Game is over. Reset game.";
+        displayMsg(message);
+        return;
     }
     if(compPTurn === true) {
         errorM = "Wait your turn!";
-        throw errorM;
+        return;
     }
     //player moves in input arg index location:
     currentBoard[index] = realP;
@@ -279,6 +290,11 @@ function populateBoard(board){
 function resetGame(){
     //reset currentboard state
     currentBoard = [];
+    isReset = true;
+    compPWon = false;
+    realPWon = false;
+    compP = undefined;
+    realP = undefined;
     displayMsg("");
     if(document.getElementById("chooseX")!= null) {
         removeButtons();
@@ -296,11 +312,7 @@ function resetGame(){
     //add button ids:
     button1.setAttribute("id", "chooseX");
     button2.setAttribute("id", "chooseO");
-    //add button classes:
-    // button1.classList.add("btn");
-    // button2.classList.add("btn");
-    // button1.classList.add("btn-primary");
-    // button2.classList.add("btn-primary");
+    
     
 
     button1.innerHTML = `<input type = 'button' class='btn btn-primary' value = 'Choose X' onClick = 'choosePlayer("X")'>`;
@@ -322,6 +334,7 @@ function resetGame(){
     populateBoard(currentBoard);
     //update display
     updateDisplay();
+    isReset = false;
 }
 
 function determineTurn(turn) {
@@ -345,12 +358,21 @@ function determineTurn(turn) {
 function updateDisplay(board) {
     //let dispId = "index" + 1;
     //document.getElementById(dispId).innerHTML = "X";
+    //loop through the currentboard
     for(i=0; i<currentBoard.length; i++) {
         let dispId = "index" + i;
+        //if the game was just reset:
+        if(isReset === true) {
+            //set the display html text for each game button to empty:
+            document.getElementById(dispId).innerHTML = "";    
+        }
+        //if the current spot is an X or O
+        if(currentBoard[i]===realP || currentBoard[i] === compP) {
+            //Display the current value to the html at correct button div:
+            document.getElementById(dispId).innerHTML = currentBoard[i];
+        }
         
-        //console.log(dispId);
-        document.getElementById(dispId).innerHTML = currentBoard[i];
-
+        
     }
 }
 function removeButtons() {

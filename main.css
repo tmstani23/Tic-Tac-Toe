@@ -4,17 +4,15 @@
     align-content: center;
     flex-direction: column;
     text-align: center;
-    
     border-style: solid;
     border-color: black;
 }
 #choose-div {
-    display:flex;
+    display: grid;
     margin: 0 auto;
-    align-content: center;
-    flex-direction: column;
-    height: 400px;
-    flex: 1;
+    grid-template-rows: 50px 50px 50px;
+    grid-gap: 3px;
+    margin-bottom: 20px;
 }
 
 #game-board {
@@ -25,21 +23,23 @@
     margin: 0 auto;
     border-style: solid;
     border-color: black;
+    
 }
-#game-board div {
-    background-color: cornflowerblue;
-}
+
 
 #outputP {
     font-size: 22px;
     color: black;
-    width: 150px;
-    height: 150px;
+    width: 400px;
+    height: 50px;
     margin: 0 auto;
     word-wrap: wrap auto;
 }
+
 .btn, btn-primary {
     color:black;
-    
+    height: 50px;
+    background-color: #5c85d6;
 }
+
 

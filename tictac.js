@@ -47,7 +47,7 @@ function winningBoard(player, board) {
         //3 in a row vertical
         //col 1
     openPositions = [];
-    getOpenPos(currentBoard);
+    getOpenPos(board);
     //console.log(openPositions);
     
     //no open spots remaining:
@@ -105,6 +105,7 @@ function getOpenPos(board) {
             openPositions.push(i);
         }
     }
+    //console.log(openPositions);
 }
 
 //create compMove function:
@@ -113,6 +114,7 @@ function compMove() {
     let result;
     let hasMoved = false;
     
+    openPositions = [];
     //get open positions
     getOpenPos(currentBoard);
     //check each open position:
@@ -122,7 +124,7 @@ function compMove() {
         //console.log(tempBoard);
         //console.log(position); 
         //place an x at the position
-        tempBoard[position] = "X";
+        tempBoard[position] = compP;
         //console.log(tempBoard);
         // //test if win condition
         // if(compPWon === true){
@@ -157,13 +159,14 @@ function compMove() {
             
             tempBoard = Array.from(currentBoard);
             //console.log(tempBoard);
-            //console.log(position); 
-            //place an x at the position
-            tempBoard[position] = "O";
+            console.log(position);
+            console.log(openPositions); 
+            //Test real player move at position:
+            tempBoard[position] = realP;
             
-            //console.log(tempBoard);
-            //test if win condition
-            //console.log(winningBoard(realP, tempBoard));
+            console.log(tempBoard + "temp");
+            //test if real player would win:
+            console.log(winningBoard(realP, tempBoard));
             if(winningBoard(realP, tempBoard) === 10) {
                 //winningPosition = position;
                 //if real player win is found block that location:
@@ -188,7 +191,7 @@ function compMove() {
         hasMoved = true;
         //pick random location and move there: 
         let randomOpen = openPositions[Math.floor(Math.random()*openPositions.length)];
-            console.log(randomOpen);
+            //console.log(randomOpen);
             //place X in that location
             currentBoard[randomOpen] = compP;
             changeBColor(compP, randomOpen);
@@ -268,12 +271,12 @@ function realPMove(index) {
     if(winningBoard(realP, currentBoard) === 10) {
         console.log(currentBoard + ` realp wins!`)
         realPWon = true;
-        displayMsg("realP wins" + realPWon);
+        displayMsg("You Win!");
         isRunning = false;
         
     }
     determineTurn("comp");
-    compMove();
+    setTimeout(compMove, 2000);
     return realPWon;
 }  
 
@@ -301,7 +304,9 @@ function resetGame(){
     }
     
     //add choose player paragraph and text
-    let para = document.createElement("chooseP");                       // Create a <p> element
+    let para = document.createElement("chooseP"); 
+    para.className += "chooseP";                     
+    
     var t = document.createTextNode("Choose Your Side!");
     para.setAttribute("id", "chooseP");
     para.appendChild(t);
@@ -314,9 +319,10 @@ function resetGame(){
     button2.setAttribute("id", "chooseO");
     
     
+    
 
-    button1.innerHTML = `<input type = 'button' class='btn btn-primary' value = 'Choose X' onClick = 'choosePlayer("X")'>`;
-    button2.innerHTML = `<input type = 'button' class='btn btn-primary' value = 'Choose O' onClick = 'choosePlayer("O")'>`;
+    button1.innerHTML = `<input type = 'button' class='btn btn-primary chooseX' value = 'X' onClick = 'choosePlayer("X")'>`;
+    button2.innerHTML = `<input type = 'button' class='btn btn-primary chooseO' value = 'O' onClick = 'choosePlayer("O")'>`;
 
     document.getElementById("choose-div").appendChild(button1);
     document.getElementById("choose-div").appendChild(button2); 
@@ -328,7 +334,7 @@ function resetGame(){
     //reset background colors to blue:
     for(i=0; i<9; i++){
         let addColor = "index" + i;
-        document.getElementById(addColor).style.backgroundColor = "#5c85d6";
+        document.getElementById(addColor).style.backgroundColor = "#5c8f65";
     }
     //populate board:
     populateBoard(currentBoard);
@@ -371,7 +377,6 @@ function updateDisplay(board) {
             //Display the current value to the html at correct button div:
             document.getElementById(dispId).innerHTML = currentBoard[i];
         }
-        
         
     }
 }

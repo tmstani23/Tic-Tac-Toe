@@ -154,21 +154,41 @@ function compMove() {
     //for each position:
     //if there is a possible win location block it:
     if (!compPWon) {
-        openPositions.every(function (position) {
+       
             //create copy of main board
+        for(let position=0; position<tempBoard.length; position++) {
+
             
             tempBoard = Array.from(currentBoard);
             //console.log(tempBoard);
-            console.log(position);
-            console.log(openPositions); 
-            //Test real player move at position:
-            tempBoard[position] = realP;
+            //console.log(position);
+            //console.log(openPositions); 
+            //Test real player move at position if open:
+            //If real player could win and x has already blocked the location:
+            if(tempBoard[position] === compP) {
+                //pass to the next round of loop check:
+                console.log("already blocked");
+                continue;
+            }
+            // if(hasMoved === true) {
+            //     //pass to the next round of loop check:
+            //     console.log("already blocked");
+            //     break;
+            // }
+            //if there are not already a player or comp move at the location:
+            if(tempBoard[position] != compP || tempBoard[position] != realP) {
+                tempBoard[position] = realP;
+            }
             
-            console.log(tempBoard + "temp");
+            
+            //console.log(tempBoard + "temp");
             //test if real player would win:
             console.log(winningBoard(realP, tempBoard));
             if(winningBoard(realP, tempBoard) === 10) {
                 //winningPosition = position;
+                
+                
+                
                 //if real player win is found block that location:
                 currentBoard[position] = compP;
                 changeBColor(compP, position);
@@ -176,33 +196,40 @@ function compMove() {
                 console.log(currentBoard + ` compblocking realp` + position);
                 // result = winningPosition + " " + realP;
                 // displayMsg(result);
-                return false;
-            }
-            else {
-                
-                return true;
+                break;
             }
             //else if not a win check if enemy player can win
-        });
+        };
         
     };
     //Else pick a random location and move there
     if(hasMoved == false) {
         hasMoved = true;
-        //pick random location and move there: 
+        //If the middle is open move there:
+        if (currentBoard[4] === 4) {
+            currentBoard[4] = compP;
+            changeBColor(compP, 4);
+        }
+        else {
+            //pick random location and move there: 
         let randomOpen = openPositions[Math.floor(Math.random()*openPositions.length)];
-            //console.log(randomOpen);
-            //place X in that location
-            currentBoard[randomOpen] = compP;
-            changeBColor(compP, randomOpen);
-            console.log(currentBoard + "compMoved" + randomOpen);
+        //console.log(randomOpen);
+        //place X in that location
+        currentBoard[randomOpen] = compP;
+        changeBColor(compP, randomOpen);
+        console.log(currentBoard + "compMoved" + randomOpen);
+        }
+        
     }
         
     //if no enemy wins are found continue searching down another level
     //console.log(result);
     //go to player turn
+    
     determineTurn("real");
     return compPWon;
+   
+    
 }
 
 // function testButton() {
@@ -276,7 +303,7 @@ function realPMove(index) {
         
     }
     determineTurn("comp");
-    setTimeout(compMove, 2000);
+    compMove();
     return realPWon;
 }  
 

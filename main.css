@@ -27,8 +27,6 @@
     border-color: black;
     
 }
-
-
 #outputP {
     font-size: 22px;
     font-family: 'Oswald', sans-serif;
@@ -68,7 +66,12 @@
     color: #f0f0f0;
     font-family: 'Oswald', sans-serif;
 }
-
+#copyrightP {
+    color: #f0f0f0;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    margin-top: 20px;    
+}
 .btn, btn-primary {
     color:black;
     font-size: 15px;

@@ -65,11 +65,13 @@
 #chooseP {
     color: #f0f0f0;
     font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    margin: 12px;
 }
 #copyrightP {
     color: #f0f0f0;
     font-family: 'Oswald', sans-serif;
-    font-size: 12px;
+    font-size: 12px;                    
     margin-top: 20px;    
 }
 .btn, btn-primary {

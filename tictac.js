@@ -314,9 +314,15 @@ function resetGame(){
         //Remove choose player buttons:
         removeButtons();
     }
+    //create titleDiv:
+    let titleD = document.createElement("choose-div");
+    //Set the title id:
+    titleD.setAttribute("id", "choose-div");
+    //Append the new div to the title header above it:
+    document.getElementById("title-div").appendChild(titleD);
     //add choose player paragraph and text
     let para = document.createElement("chooseP"); 
-    para.className += "chooseP";                     
+    //para.className += "chooseP";                     
     var t = document.createTextNode("Choose Your Side!");
     para.setAttribute("id", "chooseP");
     para.appendChild(t);
@@ -385,15 +391,18 @@ function updateDisplay() {
 }
 //Function that removes choose player buttons from the html:
 function removeButtons() {
-    //Remove chooseX button:
-    document.getElementById('chooseX').parentNode
-    .removeChild(document.getElementById('chooseX'));
-    document.getElementById('chooseO').parentNode
-    //Remove chooseO button:
-    .removeChild(document.getElementById('chooseO'));
-    //Remove the character select paragraph from the html:
-    document.getElementById('chooseP').parentNode
-    .removeChild(document.getElementById('chooseP'));
+    //Remove choose div:
+    document.getElementById("choose-div").parentNode
+    .removeChild(document.getElementById('choose-div'));
+    // //Remove chooseX button:
+    // document.getElementById('chooseX').parentNode
+    // .removeChild(document.getElementById('chooseX'));
+    // document.getElementById('chooseO').parentNode
+    // //Remove chooseO button:
+    // .removeChild(document.getElementById('chooseO'));
+    // //Remove the character select paragraph from the html:
+    // document.getElementById('chooseP').parentNode
+    // .removeChild(document.getElementById('chooseP'));
 }
 
 

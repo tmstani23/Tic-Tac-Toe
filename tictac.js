@@ -322,7 +322,7 @@ function resetGame(){
     document.getElementById("title-div").appendChild(titleD);
     //add choose player paragraph and text
     let para = document.createElement("chooseP"); 
-    //para.className += "chooseP";                     
+    para.className += "chooseP";                     
     var t = document.createTextNode("Choose Your Side!");
     para.setAttribute("id", "chooseP");
     para.appendChild(t);

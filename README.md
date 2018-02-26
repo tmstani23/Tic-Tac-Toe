@@ -23,5 +23,5 @@ Try to get three in a row vertical, horizontal or diagonal.
 
 
 # Screenshots:
-![Alt text](https://github.com/tmstani23/Pomodoro-JS/blob/Development/screen1.jpg)
-![Alt text](https://github.com/tmstani23/Pomodoro-JS/blob/Development/screen2.jpg)
+![Alt text](https://github.com/tmstani23/Tic-Tac-Toe/blob/Development/tictacss1.jpg)
+![Alt text](https://github.com/tmstani23/Tic-Tac-Toe/blob/Development/tictacss2.jpg)

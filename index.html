@@ -1,7 +1,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        
+        <!--fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Anton|Oswald:500" rel="stylesheet">  
         <!--Bootstrap link:-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <!--Bootstrap link:-->
@@ -14,29 +15,36 @@
     <body>
         
         <div id="container-div">
-            <h1>Tic-Tac-Toe</h1>
-            <p onload="displayMsg()" id="outputP"></p>
-            <div id="game-board">
-                <div id="index0"></div>
-                <div id="index1"></div>
-                <div id="index2"></div>
-                <div id="index3"></div>
-                <div id="index4"></div>
-                <div id="index5"></div>
-                <div id="index6"></div>
-                <div id="index7"></div>
-                <div id="index8"></div>
-                
+            <h1 id="title-div">Tic-Tac-Toe</h1>
+            <div id="choose-div">
+                <p id="chooseP">Choose your side!</p>
+                <button id="chooseX" class="btn btn-primary chooseX" onclick="choosePlayer('X')">X</button>
+                <button id="chooseO" class="btn btn-primary chooseO" onclick="choosePlayer('O')">O</button>
             </div>
-
-            <input id="pInput" value="3"></input>
-            <button id="submitButton" class="btn btn-primary" onclick="testButton()">Player Move</button>
+            <div id="game-board">
+                <button id="index0" class="btn btn-primary" onclick="realPMove(0)"></button>
+                <button id="index1" class="btn btn-primary" onclick="realPMove(1)"></button>
+                <button id="index2" class="btn btn-primary" onclick="realPMove(2)"></button>
+                <button id="index3" class="btn btn-primary" onclick="realPMove(3)"></button>
+                <button id="index4" class="btn btn-primary" onclick="realPMove(4)"></button>
+                <button id="index5" class="btn btn-primary" onclick="realPMove(5)"></button>
+                <button id="index6" class="btn btn-primary" onclick="realPMove(6)"></button>
+                <button id="index7" class="btn btn-primary" onclick="realPMove(7)"></button>
+                <button id="index8" class="btn btn-primary" onclick="realPMove(8)"></button>
+            </div>
+            
+            <div>
+                <p onload="displayMsg()" id="outputP"></p>
+                <button id="resetB" class="btn btn-primary" onclick="resetGame()">Reset Game</button>
+                <p id="copyrightP">Created by: Timothy Stanislav - IndoorKin Productions &copy;</p>    
+            </div>
+            
         </div>
-    
-    
+        
         <!--css and js links below-->
-        <link rel="stylesheet" type="text/css" href="main.css">
-        <script language="javascript" type="text/javascript" src="tictac.js"></script>    
+        
+        <script language="javascript" type="text/javascript" src="tictac.js"></script>
+        <link rel="stylesheet" type="text/css" href="main.css">    
     </body>
 
 
